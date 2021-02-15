@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/Dyrhoi/dat3-f1w3-startcode-demo.svg?branch=main)](https://travis-ci.com/Dyrhoi/dat3-f1w3-startcode-demo)
+[![Build Status](https://travis-ci.com/Dyrhoi/dat3-f1w3-startcode-demo.svg?branch=master)](https://travis-ci.com/Dyrhoi/dat3-f1w3-startcode-demo)
 
 *This project is meant as start code for projects and exercises given in Flow-1+2 (+3 using the security-branch) at http://cphbusiness.dk in the Study Program "AP degree in Computer Science"*
 
