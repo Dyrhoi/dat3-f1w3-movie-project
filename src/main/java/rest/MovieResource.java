@@ -25,12 +25,19 @@ public class MovieResource {
        
     private static final MovieFacade FACADE =  MovieFacade.getFacadeExample(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    
+    //This is needed...
+    public MovieResource() {}
 
     @Path("_populate")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String populate() {
-        return "NOT YET IMPLEMENTED.";
+        if(FACADE.count() == 0) {
+            Populator.populate();
+            return "POPULATED";
+        }
+        return "ALREADY POPULATED...";
     }
 
     @Path("")
