@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/Dyrhoi/dat3-f1w3-startcode-demo.svg?branch=master)](https://travis-ci.com/Dyrhoi/dat3-f1w3-startcode-demo)
+[![Build Status](https://travis-ci.com/Dyrhoi/dat3-f1w3-movie-project.svg?branch=main)](https://travis-ci.com/Dyrhoi/dat3-f1w3-movie-project)
 
 # Movie Project
 A simple demo project, worked within third semester of cphbusiness school.

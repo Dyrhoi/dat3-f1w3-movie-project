@@ -1,7 +1,8 @@
 package facades;
 
+import entities.Movie;
 import utils.EMF_Creator;
-import entities.RenameMe;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterAll;
@@ -11,20 +12,23 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
-public class FacadeExampleTest {
+public class MovieFacadeTest {
 
-    private static EntityManagerFactory emf;
-    private static FacadeExample facade;
+    private static EntityManagerFactory EMF;
+    private static MovieFacade FACADE;
 
-    public FacadeExampleTest() {
+    public MovieFacadeTest() {
     }
 
     @BeforeAll
     public static void setUpClass() {
-       emf = EMF_Creator.createEntityManagerFactoryForTest();
-       facade = FacadeExample.getFacadeExample(emf);
+        EMF = EMF_Creator.createEntityManagerFactoryForTest();
+        FACADE = MovieFacade.getFacadeExample(EMF);
     }
 
     @AfterAll
@@ -36,29 +40,22 @@ public class FacadeExampleTest {
     //TODO -- Make sure to change the code below to use YOUR OWN entity class
     @BeforeEach
     public void setUp() {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = EMF.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(new RenameMe("Some txt", "More text"));
-            em.persist(new RenameMe("aaa", "bbb"));
-
+            em.createQuery("DELETE FROM Movie").executeUpdate();
             em.getTransaction().commit();
+
+            // Movie(int year, String title, List<String> actors)
+            FACADE.save(new Movie(2005, "The Big Bang", new ArrayList<>(Arrays.asList("Johnny Bravo", "Martin King"))));
+            FACADE.save(new Movie(2020, "Javawakening", new ArrayList<>(Arrays.asList("Tom Hardy", "Ben Awad"))));
         } finally {
             em.close();
         }
     }
 
-    @AfterEach
-    public void tearDown() {
-//        Remove any data after each test was run
-    }
-
-    // TODO: Delete or change this method 
     @Test
-    public void testAFacadeMethod() {
-        assertEquals(2, facade.getRenameMeCount(), "Expects two rows in the database");
+    public void count() {
+        assertEquals(2, FACADE.count());
     }
-    
-
 }
