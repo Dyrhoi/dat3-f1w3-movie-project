@@ -33,11 +33,7 @@ public class MovieResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String populate() {
-        if(FACADE.count() == 0) {
-            Populator.populate();
-            return "POPULATED";
-        }
-        return "ALREADY POPULATED...";
+        return Populator.populate() ? "POPULATED" : "ALREADY POPULATED";
     }
 
     @Path("")

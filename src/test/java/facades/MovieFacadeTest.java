@@ -55,7 +55,8 @@ public class MovieFacadeTest {
     }
 
     @Test
-    public void count() {
+    public void testCount() {
         assertEquals(2, FACADE.count());
     }
+
 }

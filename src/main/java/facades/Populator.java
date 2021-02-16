@@ -18,11 +18,15 @@ import utils.EMF_Creator;
  * @author tha
  */
 public class Populator {
-    public static void populate(){
+    public static boolean populate(){
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         MovieFacade fe = MovieFacade.getFacadeExample(emf);
-        fe.save(new Movie(2005, "The Big Bang", new ArrayList<>(Arrays.asList("Johnny Bravo", "Martin King"))));
-        fe.save(new Movie(2020, "Javawakening", new ArrayList<>(Arrays.asList("Tom Hardy", "Ben Awad"))));
+        if(fe.count() == 0) {
+            fe.save(new Movie(2005, "The Big Bang", new ArrayList<>(Arrays.asList("Johnny Bravo", "Martin King"))));
+            fe.save(new Movie(2020, "Javawakening", new ArrayList<>(Arrays.asList("Tom Hardy", "Ben Awad"))));
+            return true;
+        } else
+            return false;
     }
     
     public static void main(String[] args) {
