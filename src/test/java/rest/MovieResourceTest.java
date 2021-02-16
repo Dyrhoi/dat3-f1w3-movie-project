@@ -9,6 +9,7 @@ import io.restassured.parsing.Parser;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
@@ -28,7 +29,7 @@ public class MovieResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static Movie m1, m2;
+    private static Movie m1, m2, m3;
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -75,6 +76,7 @@ public class MovieResourceTest {
 
             // Movie(int year, String title, List<String> actors)
             m1 = FACADE.save(new Movie(2005, "The Big Bang", new ArrayList<>(Arrays.asList("Johnny Bravo", "Martin King"))));
+            m1 = FACADE.save(new Movie(2007, "The Big Bang - The Extra", new ArrayList<>(Arrays.asList("Johnny Bravo", "Martin King"))));
             m2 = FACADE.save(new Movie(2020, "Javawakening", new ArrayList<>(Arrays.asList("Tom Hardy", "Ben Awad"))));
         } finally {
             em.close();
@@ -94,16 +96,37 @@ public class MovieResourceTest {
                 .get("/movie/count").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("count", equalTo(2));
+                .body("count", equalTo(3));
     }
     
     @Test
-    public void testGetAll() throws Exception {
+    public void testGetAll() {
         given()
                 .contentType("application/json")
                 .get("/movie/all").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("title", hasItems("The Big Bang", "Javawakening"));
+                .body("title", hasItems("The Big Bang", "Javawakening", "The Big Bang - The Extra"));
+    }
+    
+    @Test
+    public void testGetById() {
+        given()
+                .contentType("application/json")
+                .get("/movie/" + m1.getId()).then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("title", equalTo(m1.getTitle()));
+    }
+    
+    @Test
+    public void testGetByTitle() {
+        String title = "The Big Bang";
+        given()
+                .contentType("application/json")
+                .get("/movie/title/" + title).then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("", hasSize(2));
     }
 }

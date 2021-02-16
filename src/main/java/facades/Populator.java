@@ -5,7 +5,7 @@
  */
 package facades;
 
-import dtos.MovieDataTransferObject;
+import dtos.MovieDTO;
 import entities.Movie;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,8 +25,9 @@ public class Populator {
             fe.save(new Movie(2005, "The Big Bang", new ArrayList<>(Arrays.asList("Johnny Bravo", "Martin King"))));
             fe.save(new Movie(2020, "Javawakening", new ArrayList<>(Arrays.asList("Tom Hardy", "Ben Awad"))));
             return true;
-        } else
-            return false;
+        }
+        
+        return false;
     }
     
     public static void main(String[] args) {

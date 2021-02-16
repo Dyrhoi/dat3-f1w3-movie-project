@@ -15,22 +15,22 @@ import java.util.List;
  *
  * @author tha
  */
-public class MovieDataTransferObject {
+public class MovieDTO {
     private Long id;
     private int year;
     private String title;
     private List<String> actors;
 
-    public MovieDataTransferObject(Movie m) {
+    public MovieDTO(Movie m) {
         this.id = m.getId();
         this.year = m.getYear();
         this.title = m.getTitle();
         this.actors = m.getActors();
     }
     
-    public static List<MovieDataTransferObject> toList(List<Movie> movies){
-        List<MovieDataTransferObject> list = new ArrayList<>();
-        movies.forEach(m -> list.add(new MovieDataTransferObject(m)));
+    public static List<MovieDTO> toList(List<Movie> movies){
+        List<MovieDTO> list = new ArrayList<>();
+        movies.forEach(m -> list.add(new MovieDTO(m)));
         return list;
     }
 

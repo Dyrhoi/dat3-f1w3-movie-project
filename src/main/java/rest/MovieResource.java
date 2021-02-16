@@ -2,7 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.MovieDataTransferObject;
+import dtos.MovieDTO;
 import facades.Populator;
 import utils.EMF_Creator;
 import facades.MovieFacade;
@@ -58,7 +58,7 @@ public class MovieResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
-        List<MovieDataTransferObject> list = MovieDataTransferObject.toList(FACADE.getAll());
+        List<MovieDTO> list = MovieDTO.toList(FACADE.getAll());
         return Response.ok().entity(GSON.toJson(list)).build();
     }
 
@@ -66,7 +66,15 @@ public class MovieResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getById(@PathParam("id") long id) {
-        MovieDataTransferObject mdto = new MovieDataTransferObject(FACADE.getById(id));
+        MovieDTO mdto = new MovieDTO(FACADE.getById(id));
         return Response.ok().entity(GSON.toJson(mdto)).build();
+    }
+    
+    @Path("title/{title}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getById(@PathParam("title") String title) {
+        List<MovieDTO> list = MovieDTO.toList(FACADE.getByTitle(title));
+        return Response.ok().entity(GSON.toJson(list)).build();
     }
 }

@@ -52,6 +52,19 @@ public class MovieFacade {
         EntityManager em = emf.createEntityManager();
         return em.find(Movie.class, id);
     }
+    
+    public List<Movie> getAll(){
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Movie> query = em.createQuery("SELECT m FROM Movie m", Movie.class);
+        return query.getResultList();
+    }
+    
+    public List<Movie> getByTitle(String title){
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Movie> query = em.createQuery("SELECT m FROM Movie m WHERE m.title LIKE :title", Movie.class);
+        query.setParameter("title", "%" + title + "%");
+        return query.getResultList();
+    }
 
     public long count(){
         EntityManager em = emf.createEntityManager();
@@ -61,12 +74,6 @@ public class MovieFacade {
             em.close();
         }
         
-    }
-    
-    public List<Movie> getAll(){
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Movie> query = em.createQuery("SELECT m FROM Movie m", Movie.class);
-        return query.getResultList();
     }
 
 }
