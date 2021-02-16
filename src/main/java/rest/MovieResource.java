@@ -63,14 +63,14 @@ public class MovieResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
         List<MovieDataTransferObject> list = MovieDataTransferObject.toList(FACADE.getAll());
-        return Response.ok().entity(list).build();
+        return Response.ok().entity(GSON.toJson(list)).build();
     }
 
-    @Path("id/{id}")
+    @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getById(@PathParam("id") long id) {
         MovieDataTransferObject mdto = new MovieDataTransferObject(FACADE.getById(id));
-        return Response.ok().entity(mdto).build();
+        return Response.ok().entity(GSON.toJson(mdto)).build();
     }
 }
