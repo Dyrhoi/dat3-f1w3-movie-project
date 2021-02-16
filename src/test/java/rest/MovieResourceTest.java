@@ -28,7 +28,7 @@ public class MovieResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static Movie r1, r2;
+    private static Movie m1, m2;
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -74,8 +74,8 @@ public class MovieResourceTest {
             em.getTransaction().commit();
 
             // Movie(int year, String title, List<String> actors)
-            FACADE.save(new Movie(2005, "The Big Bang", new ArrayList<>(Arrays.asList("Johnny Bravo", "Martin King"))));
-            FACADE.save(new Movie(2020, "Javawakening", new ArrayList<>(Arrays.asList("Tom Hardy", "Ben Awad"))));
+            m1 = FACADE.save(new Movie(2005, "The Big Bang", new ArrayList<>(Arrays.asList("Johnny Bravo", "Martin King"))));
+            m2 = FACADE.save(new Movie(2020, "Javawakening", new ArrayList<>(Arrays.asList("Tom Hardy", "Ben Awad"))));
         } finally {
             em.close();
         }
